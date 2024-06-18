@@ -1,16 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div id="app">
+  <h1>Tienda 32 Bites</h1>
+  <h3>Lista de juegos</h3>
+  <table border="1px">
+    <thead>
+      <th>Código</th>
+      <th>Nombre</th>
+      <th>Stock</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+    </thead>
+    <tbody>
+      <tr v-for="(juego, i) in juegos" :key="i">
+             
+        <td>{{ juego.codigo }}</td>
+        <td>{{ juego.nombre }}</td>
+        <td>{{ juego.stock }}</td>
+        <td>${{ Number(juego.precio).toLocaleString() }}</td>
+        <td>
+          <button @click="incrementar(i)" >+</button>
+          <button @click="decrementar(i)" >-</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+  },
+  computed:{
+    ...mapState(["juegos"])
+  },
+  methods: {
+    ...mapActions(["incrementar", "decrementar"])
+  },
 }
 </script>
 
@@ -22,5 +52,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+table {
+  width: 50%;
+  margin: auto;
 }
 </style>
